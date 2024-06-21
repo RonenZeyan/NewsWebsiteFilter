@@ -1,0 +1,101 @@
+
+{% extends 'base.html' %}
+{% block cssLink %}
+<title>Home</title>
+<link rel="stylesheet" href="../static/css/style.css">
+{% endblock %}
+{% block body %}
+
+    <div class="flex flex-col justify-center items-center w-full h-[100vh] bg-gray-200 dark:bg-gray-900">
+        <h1 class="font-bold my-4 text-3xl font-serif">My History Filtering</h1>
+        <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+            <div class="inline-block min-w-full shadow rounded-lg overflow-hidden dark:border">
+            <table class="min-w-full leading-normal font-bold">
+                <thead>
+                    <tr>
+                        <th
+                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                            Created at
+                        </th>
+                        <th
+                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                            URL
+                        </th>
+                        <th
+                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                            Filtering Type
+                        </th>
+                        <th
+                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                            HISTORY DATA
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if History %}
+                    {% for data in History %}
+                    <tr>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white dark:bg-gray-600 text-sm">
+                            {{data['history'].date_created}}
+                        </td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white dark:bg-gray-600 text-sm">
+                            {{data['history'].websiteURL}}
+                        </td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white dark:bg-gray-600 text-sm">
+                            {{data['history'].data_type}}
+                        </td>
+                        {% if data['history'].data_type == "category" %}
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white dark:bg-gray-600 text-sm">
+                                {% if data['category'].politics %}
+                                    <span>politics</span> |
+                                {% endif %}
+                                {% if data['category'].criminal %}
+                                    <span>criminal</span> |
+                                {% endif %}
+                                {% if data['category'].sexual %}
+                                    <span>sexual</span> |
+                                {% endif %}
+                            </td>
+                            
+                        {% else %}
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white dark:bg-gray-600 text-sm">
+                                {{data['entered_words'].enterWord_1}} |
+                                {{data['entered_words'].enterWord_2}} |
+                                {{data['entered_words'].enterWord_3}}
+                            </td>
+                        {% endif %}
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            {% else %}
+            <tr>
+                <td colspan="4">No history data found</td>
+            </tr>
+            {% endif %}
+            </table>
+            <nav class="font-serif px-5 py-4 bg-white dark:bg-gray-600 border-t flex flex-col xs:flex-row items-center xs:justify-between" aria-label="...">
+                <ul class="pagination p-2 bg-white shadow border-gray-200 border-2 rounded-lg" style="display: flex; justify-content: flex-end">
+                    {% for page_num in user_history.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                    {% if page_num %}
+                    {% if user_history.page == page_num %}
+                    <li class="text-sm bg-blue-600 hover:bg-gray-400 text-white font-semibold py-2 px-4 rounded-l">
+                        <a href="{{url_for('history', page=page_num)}}" class="page-link">{{page_num}}</a>
+                    </li>
+                    {%else%}
+                    <li class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
+                        <a href="{{url_for('history', page=page_num)}}" class="page-link">{{page_num}}</a>
+                    </li>
+                    {%endif%}
+                    {% else %}
+                    <p class="px-2 flex items-end text-xl">...</p>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    </div>
+
+{% endblock %}

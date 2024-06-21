@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block cssLink %}
+<title>Home</title>
+<link rel="stylesheet" href="../static/css/style.css">
+{% endblock %}
+{% block body %}
+
+<div style="background-repeat: no-repeat; background-image: url(../static/images/filterpage.jpg);" id="dynamic-background" class="text-white font-bold text-3xl bg-black w-full bg-contain bg-right h-[100vh]">
+    <h1 id="headline" class="absolute top-[150px] left-[100px] pt-8 font-serif dark:text-gray-500">Welcome to ASSR News Filter</h1>
+    <p id="subtext" class="w-1/4 absolute top-[250px] left-[100px] dark:text-gray-500">Your personalized news hub - filtering out the noise for you.</p>
+    <div class="hero-content absolute top-[400px] left-[100px] bg-blue-900 hover:bg-gray-900 rounded-lg p-3">
+        <a href="{{url_for('login')}}" class="cta-button dark:text-gray-500">Get Started</a>
+    </div> 
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const backgroundImage = document.getElementById('dynamic-background');
+    const headline = document.getElementById('headline');
+    const subtext = document.getElementById('subtext');
+
+    const slides = [
+        {
+            image: 'url(../static/images/filterpage.jpg)',
+            title: 'Welcome to ASSR News Filter',
+            text: 'Your personalized news hub - filtering out the noise for you.'
+        },
+        {
+            image: 'url(../static/images/newsPic1.jpg)',
+            title: 'Custom Filters',
+            text: 'Only see news thats relevant to you by customizing your filters.'
+        },
+        {
+            image: 'url(../static/images/filterPageIMG1.jpg)',
+            title: 'Your News History',
+            text: 'Keep track of what you have read with your personal news history log.'
+        }
+    ];
+
+    let currentSlide = 1;
+
+    function changeSlide() {
+        const {image, title, text} = slides[currentSlide];
+        backgroundImage.style.backgroundImage = image;
+        headline.textContent = title;
+        subtext.textContent = text;
+        
+        currentSlide = (currentSlide + 1) % slides.length;
+    }
+
+    setInterval(changeSlide, 3000); // Change slide every 3 seconds
+});
+
+</script>
+
+
+
+{% endblock %}

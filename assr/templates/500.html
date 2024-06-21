@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+{% block cssLink %}
+<title>500 error</title>
+<link rel="stylesheet" href="../static/css/style.css">
+{% endblock %}
+{% block body %}
+
+    <div class="flex flex-col justify-center items-center w-[100vw] h-[100vh] border border-black border-2">
+        <h1>
+            Something went wrong (500)
+        </h1>
+        <hr>
+        <p>We are experiencing some difficulties on our end. Please try again later</p>
+    </div>
+
+{% endblock %}

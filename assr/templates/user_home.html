@@ -1,0 +1,67 @@
+
+
+
+{% extends 'base.html' %}
+{% block cssLink %}
+<title>Home</title>
+<link rel="stylesheet" href="../static/css/style.css">
+{% endblock %}
+{% block body %}
+
+<div class="relative bg-gray-200 h-96">
+    <!-- Background image -->
+    <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center" style="background-size: cover; background-repeat: no-repeat; background-image: url(../static/images/secFilter.svg);"></div>
+    <!-- Overlay -->
+    <div class="absolute top-0 left-0 w-full h-full bg-black" style="opacity: 0.7;"></div>
+    <!-- Text content -->
+    <div class="absolute mx-auto flex items-center justify-center h-full px-4">
+      <div class="text-center text-white dark:text-gray-500 w-3/5">
+        <h1 style="z-index: 3;" class="text-5xl font-bold mb-4 dark:text-white">Welcome, <span class="uppercase">{{current_user.username}}</span>!</h1>
+        <p class="mb-6 font-bold">Here at ASSR, we believe that curated news is key to staying informed without the noise. Our platform allows you to filter out the fluff and focus on what matters to you. Tailor your newsfeed with filters and never miss a beat on the topics you care about.
+        </p>
+        <a id="filteringID" href="{{url_for('FilterPageDetails')}}" class="inline-block bg-red-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-red-700">Start Your Filtering</a>
+      </div>
+    </div>
+</div>
+
+    <!-- Content Section -->
+    <div class="container mx-auto my-10 px-4">
+        <div class="text-center">
+            <h2 class="text-3xl font-semibold my-4 dark:text-white">How It Works</h2>
+            <p class="mb-5 font-bold text-gray-600">Streamline your news experience with our simple 3-step filtering process, crafted to ensure you only read what's relevant to you.</p>
+            <div class="flex sm:flex-col md:flex-row w-full gap-10 font-serif">
+                <div class="w-1/3 m-auto">
+                    <div class="flex gap-5 justify-center items-center">
+                        <div>
+                            <h1 class="font-bold text-2xl dark:text-white">Step 1</h1>
+                            <p class="font-bold text-gray-600 mb-6 m-auto">Start by Entering a fully correct NewsWebsite LINK <span class="underline text-blue-500">[https://www.newsWebsite.com]</span></p>
+                        </div>
+                        <div>
+                            <h1 class="text-5xl pr-2">></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-1/3  m-auto">
+                    <div  class="flex gap-5 justify-center items-center">
+                        <div>
+                            <h1 class="font-bold text-2xl dark:text-white">Step 2</h1>
+                            <p class="font-bold text-gray-600 mb-6 w-4/5 m-auto">Choose categories or enter specific keywords you're interested in to filter news articles.</p>
+                        </div>
+                        <div>
+                            <h1 class="text-5xl">></h1>
+                        </div>
+                    </div>        
+                </div>
+                <div class="w-1/3  m-auto">
+                    <div class="flex pr-12 justify-center items-center">
+                        <div>
+                            <h1 class="font-bold text-2xl dark:text-white">Step 3</h1>
+                            <p class="font-bold text-gray-600 mb-6 w-4/5 m-auto">Click the <span class="underline text-black">'Start Filtering Process'</span> button and let us bring you the news that matters to you.</p>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+         </div>
+    </div>
+        
+{% endblock %}

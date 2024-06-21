@@ -1,0 +1,129 @@
+
+{% extends 'base.html' %}
+{% block cssLink %}<link rel="stylesheet" href="../static/css/style.css">{% endblock %}
+
+{% block body %}
+    <section id="formList" class="bg-gray-200 dark:bg-gray-900 h-full py-5 font-bold flex justify-center">
+            <div class="bg-white dark:bg-gray-600 w-[600px] rounded-lg p-16 shadow dark:border ">
+                <div class="flex justify-center"><svg height="100px" width="200px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 392.54 392.54" xml:space="preserve" fill="#000000" stroke="#000000" stroke-width="10.991148"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path style="fill:#FFFFFF;" d="M219.345,344.911V190.988c0-2.909,1.164-5.689,3.232-7.758L367.386,39.586 c3.814-3.814,3.426-7.434,2.392-9.891c-1.487-3.62-6.012-7.887-13.834-7.887H36.137c-7.822,0-12.347,4.267-13.834,7.887 c-1.034,2.392-1.422,6.077,2.392,9.891L169.503,183.23c2.069,2.004,3.232,4.848,3.232,7.758v174.093L219.345,344.911z"></path> <path style="fill:#56ACE0;" d="M59.733,43.594L91.41,75.012c0.065,0,0.259,0,0.323,0h97.228c6.012,0,10.925,4.848,10.925,10.925 c0,6.012-4.848,10.925-10.925,10.925h-75.636l22.044,21.786h31.741c6.012,0,10.925,4.848,10.925,10.925 c0,6.012-4.848,10.925-10.925,10.925h-9.826l38.853,38.335l136.21-135.176L59.733,43.594L59.733,43.594z"></path> <path style="fill:#194F82;" d="M356.008,0.022H36.137c-30.578,0-47.968,33.487-26.828,55.079l141.705,140.412v186.053 c0.065,7.111,7.564,13.382,15.192,10.02l68.396-29.543c4.008-1.681,6.594-5.624,6.594-10.02V195.513l141.64-140.412 C404.234,33.767,388.008,0.022,356.008,0.022z M367.45,39.586L222.642,183.23c-2.069,2.004-3.232,4.848-3.232,7.758v153.923 l-46.61,20.105V190.988c0-2.909-1.164-5.689-3.232-7.758L24.759,39.586c-8.339-8.792,1.099-18.295,11.442-17.778h319.806 C367.45,21.485,375.337,32.41,367.45,39.586z"></path> </g></svg></div>
+                <h1 class="pb-8 flex justify-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Filter News Website</h1> 
+                <form id="filterDataForm" style="display: flex; justify-content: center; align-items: center;  flex-direction: column; gap: 50px;" action="" method="POST">
+                    {{form.hidden_tag()}}
+                        <div>
+                            {{form.newsURL.label(class="")}}
+                            {% if form.newsURL.errors %}
+                                {{form.newsURL(class="border-2 border-red rounded")}}
+                                {% for error in form.newsURL.errors%}
+                                {{error}}
+                                {% endfor %}
+                            {% else %}
+                                {{form.newsURL(class="border-2 border-black rounded-full w-[500px] px-2 py-2",id="urlID",placeholder="ENTER URL: https://www.newsWebsite.com/")}}
+                            {% endif %}
+                        </div>
+                        <div class="flex gap-10">
+                            {% for option in form.filter_type %}
+                                <div id="unique_id_{{ loop.index }}" class="bg-gray-200 p-3 rounded-xl">
+                                    {{option()}}
+                                    {{option.label}}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    <div class="flex gap-20">
+                            <div class="flex flex-col gap-6 mx-4">
+                                <div class="flex justify-between gap-1 p-1">
+                                    {{form.PoliticsOption(id="PoliticsOption")}}
+                                    {{form.PoliticsOption.label(class="inline-block")}}
+                                </div>
+                                <div class="flex justify-between gap-1 p-1">
+                                    {{form.CriminalOption(id="criminalOption")}}
+                                    {{form.CriminalOption.label(class="inline-block")}}
+                                </div>
+                                <div class="flex justify-between gap-1 p-1">
+                                    {{form.SexualOption(id="sexualOption")}}
+                                    {{form.SexualOption.label(class="inline-block")}}
+                                </div> 
+                            </div>
+                            <div class="flex flex-col gap-6">
+                                {{form.enteredWord1(class="border-2 border-black rounded-xl p-1 disabled:bg-gray-200 block",id="enteredWord1")}}
+                                {{form.enteredWord2(class="border-2 border-black rounded-xl p-1 disabled:bg-gray-200 block",id="enteredWord2")}}
+                                {{form.enteredWord3(class="border-2 border-black rounded-xl p-1 disabled:bg-gray-200 block",id="enteredWord3")}}
+                            </div>
+                        
+                    </div>
+                    <div>
+                        {{form.Submit(class="cursor-pointer border rounded-lg p-3 bg-slate-500 hover:bg-slate-800 w-[400px] hover:text-white",id="submitID")}}
+                    </div>
+                </form>
+            </div>
+    </section>
+    <div class="hidden bg-white w-full rounded-lg p-16 shadow dark:border flex justify-center items-center h-[100vh]" id="loadingWait">
+        <div ><span>&#x21bb;</span><br>Please wait...<br><b>filtering Proccess take some minutes</b></div> 
+
+    </div>
+<script>
+
+    document.addEventListener('DOMContentLoaded',function(){
+        toggleDisabledCheckBoxes(true)
+        toggleDisabledTextInputs(true)
+        const radioButtons = document.querySelectorAll('input[type="radio"][name="filter_type"]');
+        radioButtons.forEach(function(radio){
+            radio.addEventListener('change',function(){
+                if(this.value =="category"){
+                    toggleDisabledCheckBoxes(false)
+                    toggleDisabledTextInputs(true)
+                    document.getElementById('unique_id_1').classList.add("bg-blue-800")  //when radio button choosed we change his background color
+                    document.getElementById('unique_id_1').classList.add("text-white")
+                    document.getElementById('unique_id_2').classList.remove("bg-blue-800")
+                    document.getElementById('unique_id_2').classList.remove("text-white")
+
+                }
+                else
+                {
+                    toggleDisabledCheckBoxes(true)
+                    toggleDisabledTextInputs(false)
+                    document.getElementById('unique_id_2').classList.add("bg-blue-800")
+                    document.getElementById('unique_id_2').classList.add("text-white")
+                    document.getElementById('unique_id_1').classList.remove("bg-blue-800")
+                    document.getElementById('unique_id_1').classList.remove("text-white")
+
+
+
+                }
+            })
+        })
+    })
+
+    function toggleDisabledCheckBoxes(status){
+        document.getElementById("PoliticsOption").disabled = status
+        document.getElementById("criminalOption").disabled = status
+        document.getElementById("sexualOption").disabled = status
+    }
+
+    function toggleDisabledTextInputs(status){
+        document.getElementById("enteredWord1").disabled = status
+        document.getElementById("enteredWord2").disabled = status
+        document.getElementById("enteredWord3").disabled = status
+    }
+
+
+
+    document.getElementById("filterDataForm").addEventListener('submit',function(){
+        //before submit we check if the required fields in the form have a value (validate on the frontEND)
+        if(!this.checkValidity()){
+            event.preventDefault() //to not refresh the page again
+            event.stopPropagation()  //stop the button from work
+        }
+        else{
+        document.getElementById('loadingWait').classList.toggle('hidden')
+        document.getElementById('formList').classList.add('hidden') 
+        }
+    })
+
+
+    // document.getElementById('Submit').addEventListener('click',function(){
+    //     document.getElementById('loadingWait').classList.toggle('hidden')
+    //     document.getElementById('formList').classList.add('hidden')
+    // })
+</script>
+
+{% endblock %}

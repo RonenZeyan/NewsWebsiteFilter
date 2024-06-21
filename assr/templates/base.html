@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        //this is a configration for add dark mode in tailwind 
+        tailwind.config = {
+            darkMode: 'class', //for enable darkMode in tailwind we add this darkMode class 
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {% block title %}{% endblock %}
+    {% block cssLink %}{% endblock %}
+</head>
+<body class="dark:bg-gray-900">
+    
+    {% include 'header.html' %}
+    {% block body %}{% endblock %}
+    {% include 'footer.html' %}
+
+
+<script>
+    //we used the localstorage for save the darkMode (we also can save in db)
+    //but we think its enough to save in localstorage of the browser instead of db 
+    if (localStorage.getItem('darkMode') === 'true') {
+          document.documentElement.classList.add('dark');
+    }
+</script>
+
+</body>
+</html>

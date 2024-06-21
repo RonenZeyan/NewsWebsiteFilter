@@ -1,0 +1,18 @@
+
+{% extends 'base.html' %}
+{% block cssLink %}
+<title>403 error</title>
+<link rel="stylesheet" href="../static/css/style.css">
+{% endblock %}
+{% block body %}
+
+    <div class="font-serif font-bold flex flex-col justify-center items-center w-[100vw] h-[100vh] border border-black border-2">
+        <h1>
+            You do not have permission to do that (403)
+        </h1>
+        <hr>
+        <p>Please check your account and try again</p>
+        <a class="bg-gray-700 rounded p-3 mt-6 font-bold hover:bg-gray-800 hover:text-white" href="{{url_for('home')}}">Return Home Page</a>
+    </div>
+
+{% endblock %}

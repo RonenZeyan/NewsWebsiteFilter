@@ -1,0 +1,15 @@
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+  
+        #loadingWait {
+            text-align: center;
+        }
+  
+        #loadingWait span {
+            animation: spin 2s linear infinite; /* animation for rotate the arrow*/
+            display: inline-block;
+            font-size: 80px;
+        }
+
